@@ -2,7 +2,7 @@
  * EEPROM_Program.c
  *
  *  Created on: Dec 22, 2023
- *      Author: shady
+ *      Author: mohamed_atef
  */
 #include"STD_TYPES.h"
 #include"BIT_MATH.h"
@@ -11,6 +11,7 @@
 #include"TWI_init.h"
 #include "TWI_Private.h"
 #include "EEPROM_Interface.h"
+#include "LCD_Interface.h"
 #include "util/delay.h"
 
 //void EEPROM_VoidInit(void)
@@ -103,24 +104,24 @@ void EEPROM_WRITE(u16 wordadd, u8 data)
 }
 void EEPROM_WRITE_String(u16 wordadd, u8 *data)
 {
-	for(u8 i=0;data[i] != '\0';i++)
-	{
+    while (*data)
+    {
+        u8 add = (wordadd >> 8) | 0b01010000;
 
-	u8 add = (wordadd >> 8) | 0b01010000;
+        vMASTER_init();
+        vMASTER_START_condition();
 
-	vMASTER_init();
-	vMASTER_START_condition();
+        MASTER_SEND_ADDRESS_WRITE(add);
+        MASTER_SEND_DATA((u8)wordadd);
 
-	MASTER_SEND_ADDRESS_WRITE(add);
-	MASTER_SEND_DATA((u8) wordadd);
+        MASTER_SEND_DATA(*data);
+        M_TWI_Stop();
+        _delay_ms(5);
 
-	MASTER_SEND_DATA(*data);
-	M_TWI_Stop();
-	_delay_ms(5);
-	wordadd++;
-	}
-	_delay_ms(5);
-
+        data++;
+        wordadd++;
+    }
+    _delay_ms(5);
 }
 u8 EEPROM_READ(u16 wordadd)
 {
@@ -136,4 +137,30 @@ u8 EEPROM_READ(u16 wordadd)
 	return data;
 	_delay_ms(5);
 
+}
+
+
+
+void EEPROM_READ_String(u16 wordadd, u8 *buffer, u16 length)
+{
+    u8 add = (wordadd >> 8) | 0b01010000;
+    vMASTER_init();
+
+    for (u16 i = 0; i < length; i++)
+    {
+        vMASTER_START_condition();
+        MASTER_SEND_ADDRESS_WRITE(add);
+        MASTER_SEND_DATA((u8)wordadd);
+        vMASTER_REP_START_condition();
+        MASTER_SEND_ADDRESS_READ(add);
+
+        buffer[i] = MASTER_RECIVE_DATA();
+
+        _delay_ms(5);
+
+        wordadd++;
+    }
+    M_TWI_Stop();
+    buffer[length] = '\0'; // Ensure the buffer is null-terminated
+//    LCD_VoidWriteString(buffer); // Display the complete string after reading
 }

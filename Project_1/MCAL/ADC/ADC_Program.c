@@ -69,6 +69,7 @@ u32 ADC_READ(ADC_channel channel) {
 //	}
 //	SET_BIT(ADCSRA, ADIF);
 //}
+
 void start_ADC_conversion(ADC_channel channel) {
     ADMUX = (ADMUX & 0xE0) | channel; // Masking and then select the input pin
     SET_BIT(ADCSRA, ADSC); // ADC Start Conversion

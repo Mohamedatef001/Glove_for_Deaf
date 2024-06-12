@@ -141,3 +141,7 @@ void LCD_VoidDisplayHeart(void) {
     }
     LCD_VoidSetCursor(1, 2);
 }
+void displayMessage(const char* message) {
+    LCD_VoidClearScreen();
+    LCD_VoidWriteString(message);
+}
