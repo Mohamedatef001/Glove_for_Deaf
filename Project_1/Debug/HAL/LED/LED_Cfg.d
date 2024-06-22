@@ -1,1 +1,0 @@
-HAL/LED/LED_Cfg.o HAL/LED/LED_Cfg.o: ../HAL/LED/LED_Cfg.c

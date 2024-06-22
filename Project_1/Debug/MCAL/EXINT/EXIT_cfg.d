@@ -1,1 +1,0 @@
-MCAL/EXINT/EXIT_cfg.o MCAL/EXINT/EXIT_cfg.o: ../MCAL/EXINT/EXIT_cfg.c
