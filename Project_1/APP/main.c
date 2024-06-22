@@ -6,7 +6,8 @@
 #include <avr/interrupt.h>
 #include "util/delay.h"
 
-volatile u16 Digital_Values[5] = { 0 }; // Array to store ADC values for each channel
+volatile u16 Digital_Values[5] = {0}; // Array to store ADC values for each channel
+
 volatile u8 current_channel = 0; // Index to keep track of the current ADC channel
 
 // List of channels to be sampled
@@ -28,7 +29,7 @@ void ADC_Complete_Callback(void) {
 
 int main(void) {
 
-	DIO_VoidSetPortDirection(1, OUTPUT);
+	DIO_VoidSetPortDirection(1, OUTPUT);// for LCD data
 	LCD_VoidInit();
 	DIO_VoidSetPinDirection(DIO_PINA0, INPUT);
 	DIO_VoidSetPinDirection(DIO_PINA1, INPUT);
@@ -36,6 +37,7 @@ int main(void) {
 	DIO_VoidSetPinDirection(DIO_PINA3, INPUT);
 	DIO_VoidSetPinDirection(DIO_PINA4, INPUT);
 	DIO_VoidSetPortDirection(3, 0xFF);
+
 	// Initialize ADC with internal voltage reference
 	ADC_INIT(Internal_Voltage_Reference);
 
@@ -63,27 +65,27 @@ int main(void) {
 	u8 received5[16] = "";
 	u8 received6[16] = "";
 	// Write the string to EEPROM starting at address 0x0000
-//	EEPROM_WRITE_String(0, message1);
-//	EEPROM_WRITE_String(20, message2);
-//	EEPROM_WRITE_String(40, message3);
-//	EEPROM_WRITE_String(60, message4);
-//	EEPROM_WRITE_String(80, message5);
-//	EEPROM_WRITE_String(100, message6);
+	EEPROM_WRITE_String(0, message1);
+	EEPROM_WRITE_String(20, message2);
+	EEPROM_WRITE_String(40, message3);
+	EEPROM_WRITE_String(60, message4);
+	EEPROM_WRITE_String(80, message5);
+	EEPROM_WRITE_String(100, message6);
 	_delay_ms(100);
 
-//	EEPROM_READ_String(0, received1, sizeof(message1));
-//	EEPROM_READ_String(20, received1, sizeof(message2));
-//	EEPROM_READ_String(40, received1, sizeof(message3));
-//	EEPROM_READ_String(60, received1, sizeof(message4));
-//	EEPROM_READ_String(80, received1, sizeof(message5));
-//	EEPROM_READ_String(100, received1, sizeof(message6));
+	EEPROM_READ_String(0, received1, sizeof(message1));
+	EEPROM_READ_String(20, received1, sizeof(message2));
+	EEPROM_READ_String(40, received1, sizeof(message3));
+	EEPROM_READ_String(60, received1, sizeof(message4));
+	EEPROM_READ_String(80, received1, sizeof(message5));
+	EEPROM_READ_String(100, received1, sizeof(message6));
 
-//	received1[sizeof(message1) - 1] = '\0';
-//	received2[sizeof(message2) - 1] = '\0';
-//	received3[sizeof(message3) - 1] = '\0';
-//	received4[sizeof(message4) - 1] = '\0';
-//	received5[sizeof(message5) - 1] = '\0';
-//	received6[sizeof(message6) - 1] = '\0';
+	received1[sizeof(message1) - 1] = '\0';
+	received2[sizeof(message2) - 1] = '\0';
+	received3[sizeof(message3) - 1] = '\0';
+	received4[sizeof(message4) - 1] = '\0';
+	received5[sizeof(message5) - 1] = '\0';
+	received6[sizeof(message6) - 1] = '\0';
 
 	while (1) {
 		u8 currentMessage[16] = "";

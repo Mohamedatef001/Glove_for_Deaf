@@ -13,5 +13,6 @@
 
 void ADC_INIT(Voltage_Reference Voltage_Selection);
 u32 ADC_READ(ADC_channel chanel);
+void ADC_VoidCallBack(void (*Ptr_f)(void));
 
 #endif /* MCAL_ADC_ADC_INTERFACE_H_ */

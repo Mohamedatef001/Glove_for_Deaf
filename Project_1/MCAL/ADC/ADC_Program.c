@@ -42,21 +42,21 @@ void ADC_INIT(Voltage_Reference Voltage_Selection) {
     SET_BIT(ADCSRA, ADEN); // enable the ADC
 }
 
-u32 ADC_READ(ADC_channel channel) {
-	int ADC_Value = 0;
-	ADMUX = (ADMUX & 0xE0) | channel; //masking and then and select the input pin
-	SET_BIT(ADCSRA, ADSC); // : ADC Start Conversion
-
-	while (GET_BIT(ADCSRA,ADIF) == 0) {
-		//flag
-	}
-	SET_BIT(ADCSRA, ADIF);
-	_delay_us(10);
-
-	ADC_Value = (int) ADCL + (int) ADCH * 256; //to store the data in 10 bits
-
-	return ADC_Value;
-}
+//u32 ADC_READ(ADC_channel channel) {
+//	int ADC_Value = 0;
+//	ADMUX = (ADMUX & 0xE0) | channel; //masking and then and select the input pin
+//	SET_BIT(ADCSRA, ADSC); // : ADC Start Conversion
+//
+//	while (GET_BIT(ADCSRA,ADIF) == 0) {
+//		//flag
+//	}
+//	SET_BIT(ADCSRA, ADIF);
+//	_delay_us(10);
+//
+//	ADC_Value = (int) ADCL + (int) ADCH * 256; //to store the data in 10 bits
+//
+//	return ADC_Value;
+//}
 
 //void ADC_VoidCallBack( void (*Ptr_f)(void)) {
 //	ADC_f = Ptr_f;
