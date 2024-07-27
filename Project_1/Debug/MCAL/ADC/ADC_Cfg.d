@@ -1,1 +1,0 @@
-MCAL/ADC/ADC_Cfg.o MCAL/ADC/ADC_Cfg.o: ../MCAL/ADC/ADC_Cfg.c
